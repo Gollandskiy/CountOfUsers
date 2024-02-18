@@ -1,0 +1,65 @@
+﻿@{
+    ViewData["Title"] = "Online Users Counter";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewData["Title"]</title>
+</head>
+<body>
+    <h2>Online Users Count: @ViewBag.OnlineUsersCount</h2>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+    keepSessionAlive();
+});
+
+function keepSessionAlive() {
+    fetch('/Users/KeepSessionAlive', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.text();
+    })
+    .then(data => {
+        console.log(data);
+    })
+    .catch(error => {
+        console.error('There was a problem with your fetch operation:', error);
+    });
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    closeSession();
+});
+
+function closeSession() {
+    fetch('/Users/CloseSession', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.text();
+    })
+    .then(data => {
+        console.log(data);
+    })
+    .catch(error => {
+        console.error('There was a problem with your fetch operation:', error);
+    });
+}
+    </script>
+</body>
+</html>
+
